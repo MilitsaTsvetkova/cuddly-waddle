@@ -1,12 +1,13 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import Theme from "./Theme";
 
 const Navbar = () => {
   return (
     <nav
       className="background-light900_dark200 fixed z-50 
-    flex w-full justify-between gap-5 p-6 shadow-light-300 
+    flex w-full justify-between gap-5 p-6 shadow-slate-300 
     dark:shadow-none sm:px-12"
     >
       <Link href="/" className="flex items-center gap-1">
@@ -18,12 +19,13 @@ const Navbar = () => {
         />
         <p
           className="h2-bold font-spaceGrotesk
-         text-dark-100 dark:text-light-900 max-sm:hidden"
+         text-gray-100 dark:text-zinc-100 max-sm:hidden"
         >
-          Dev <span className="text-primary-500">OverFlow</span>
+          Dev <span className="text-zinc-500">OverFlow</span>
         </p>
       </Link>
       <div className="flex justify-between gap-5">
+        <Theme />
         <SignedIn>
           {/* Mount the UserButton component */}
           <UserButton
