@@ -1,19 +1,5 @@
-import { SignedIn, UserButton, SignedOut, SignInButton } from "@clerk/nextjs";
-
 const Home = () => {
-  return (
-    <div>
-      {" "}
-      <SignedIn>
-        {/* Mount the UserButton component */}
-        <UserButton />
-      </SignedIn>
-      <SignedOut>
-        {/* Signed out users get sign in button */}
-        <SignInButton />
-      </SignedOut>
-    </div>
-  );
+  return <div>Home</div>;
 };
 
 export default Home;
