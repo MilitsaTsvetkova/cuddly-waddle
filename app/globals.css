@@ -26,15 +26,15 @@ body {
   }
 
   .btn {
-    @apply bg-light-800 dark:bg-dark-300 !important;
+    @apply bg-gray-800 dark:bg-zinc-300 !important;
   }
 
   .btn-secondary {
-    @apply bg-light-800 dark:bg-dark-400 !important;
+    @apply bg-gray-200 dark:bg-zinc-600 !important;
   }
 
   .btn-tertiary {
-    @apply bg-light-700 dark:bg-dark-300 !important;
+    @apply bg-gray-700 dark:bg-zinc-300 !important;
   }
 
   .markdown {
@@ -54,7 +54,7 @@ body {
   }
 
   .tab {
-    @apply min-h-full dark:bg-dark-400 bg-light-800 text-zinc-500 dark:data-[state=active]:bg-dark-300 data-[state=active]:bg-primary-100 data-[state=active]:text-primary-500 !important;
+    @apply min-h-full dark:bg-zinc-400 bg-light-800 text-zinc-500 dark:data-[state=active]:bg-dark-300 data-[state=active]:bg-primary-100 data-[state=active]:text-primary-500 !important;
   }
 
   .no-focus {

@@ -80,15 +80,15 @@
   }
 
   .text-dark400_light900 {
-    @apply text-dark-400 dark:text-zinc-900 !important;
+    @apply text-zinc-400 dark:text-zinc-900 !important;
   }
 
   .light-border {
-    @apply border-light-800 dark:border-dark-300;
+    @apply border-gray-800 dark:border-zinc-300;
   }
 
   .light-border-2 {
-    @apply border-light-700 dark:border-dark-400 !important;
+    @apply border-gray-700 dark:border-zinc-400 !important;
   }
 
   .h1-bold {

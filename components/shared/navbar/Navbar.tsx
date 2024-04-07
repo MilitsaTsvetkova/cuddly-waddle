@@ -2,6 +2,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import Theme from "./Theme";
+import MobileNav from "./MobileNav";
 
 const Navbar = () => {
   return (
@@ -44,6 +45,7 @@ const Navbar = () => {
           {/* Signed out users get sign in button */}
           <SignInButton />
         </SignedOut>
+        <MobileNav />
       </div>
     </nav>
   );
