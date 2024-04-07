@@ -36,6 +36,7 @@ const RightSidebar = () => {
         flex-col overflow-y-auto border-l 
         p-6 pt-36 
         dark:shadow-none
+        max-xl:hidden
         "
     >
       <div className="flex flex-col">
