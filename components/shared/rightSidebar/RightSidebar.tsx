@@ -18,11 +18,11 @@ const hotQuestion = [
 ];
 
 const popularTags = [
-  { id: 1, name: "React", totalQuestion: 5 },
-  { id: 2, name: "Javascript", totalQuestion: 6 },
-  { id: 3, name: "PHP", totalQuestion: 45 },
-  { id: 4, name: "Java", totalQuestion: 58 },
-  { id: 5, name: "C#", totalQuestion: 34 },
+  { id: "1", name: "React", totalQuestion: 5 },
+  { id: "2", name: "Javascript", totalQuestion: 6 },
+  { id: "3", name: "PHP", totalQuestion: 45 },
+  { id: "4", name: "Java", totalQuestion: 58 },
+  { id: "5", name: "C#", totalQuestion: 34 },
 ];
 
 const RightSidebar = () => {
