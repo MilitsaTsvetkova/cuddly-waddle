@@ -1,7 +1,7 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
 
-export default function TextEditor() {
+export default function TextEditor({ field }: any) {
   const editorRef = useRef(null);
 
   return (
@@ -10,6 +10,10 @@ export default function TextEditor() {
       onInit={(_evt, editor) => {
         // @ts-ignore
         editorRef.current = editor;
+      }}
+      onBlur={field.onBlur}
+      onEditorChange={(content) => {
+        field.onChange(content);
       }}
       initialValue="<p>This is the initial content of the editor.</p>"
       init={{
