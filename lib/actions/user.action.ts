@@ -1,6 +1,5 @@
 "use server";
 
-import { error } from "console";
 import User from "../../database/user.model";
 import { connectToDatabase } from "../mongoose";
 
@@ -12,6 +11,6 @@ export async function getUserById(params: any) {
     return user;
   } catch (e) {
     console.log(e);
-    throw error;
+    throw e;
   }
 }

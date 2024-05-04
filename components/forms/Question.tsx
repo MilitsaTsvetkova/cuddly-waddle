@@ -41,7 +41,7 @@ export function Question({ mongoUserId }: { mongoUserId: string }) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     setIsSubmitting(true);
-    console.log(values);
+
     try {
       // MAKE API CALL
       // Navigate to the question page

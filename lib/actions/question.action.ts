@@ -2,9 +2,11 @@
 
 import Question from "../../database/question.model";
 import Tag from "../../database/tag.model";
+import User from "../../database/user.model";
 import { connectToDatabase } from "../mongoose";
+import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
 
-export async function createQuestion(params: any) {
+export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToDatabase();
     const { title, content, tags, author, path } = params;
@@ -16,7 +18,7 @@ export async function createQuestion(params: any) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } },
         {
-          $setOnInsert: { name: tag.name },
+          $setOnInsert: { name: tag },
           $push: { questions: question._id },
         },
         { upsert: true, new: true }
@@ -30,4 +32,17 @@ export async function createQuestion(params: any) {
     // create an interaction record for the user
     // update ranking
   } catch (e) {}
+}
+
+export async function getQuestions(params: GetQuestionsParams) {
+  try {
+    connectToDatabase();
+    const questions = await Question.find({})
+      .populate({ path: "tags", model: Tag })
+      .populate({ path: "author", model: User });
+    return { questions };
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
 }

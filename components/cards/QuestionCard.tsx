@@ -10,7 +10,7 @@ interface Props {
 }
 
 const QuestionCard = ({
-  question: { title, createdAt, id, tags, upvotes, answers, views, author },
+  question: { title, createdAt, _id, tags, upvotes, answers, views, author },
 }: Props) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
@@ -19,7 +19,7 @@ const QuestionCard = ({
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTimestamp(createdAt)}
           </span>
-          <Link href={`/question/${id}`}>
+          <Link href={`/question/${_id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {title}
             </h3>
@@ -29,7 +29,7 @@ const QuestionCard = ({
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <Tag key={tag.id} id={tag.id} name={tag.name} />
+          <Tag key={tag._id} id={tag._id} name={tag.name} />
         ))}
       </div>
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
@@ -38,7 +38,7 @@ const QuestionCard = ({
           alt="User"
           value={author.name}
           title={`- asked ${getTimestamp(createdAt)}`}
-          href={`/profile/${author.id}`}
+          href={`/profile/${author._id}`}
           isAuthor
           textStyles="body-medium text-dark400_light700"
         />
