@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import Question from "../../database/question.model";
 import Tag from "../../database/tag.model";
 import User from "../../database/user.model";
@@ -31,6 +32,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 
     // create an interaction record for the user
     // update ranking
+    revalidatePath(path);
   } catch (e) {}
 }
 

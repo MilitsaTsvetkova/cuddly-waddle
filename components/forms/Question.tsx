@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,6 +26,7 @@ const type: any = "create";
 export function Question({ mongoUserId }: { mongoUserId: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const path = usePathname();
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
@@ -50,6 +51,7 @@ export function Question({ mongoUserId }: { mongoUserId: string }) {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
+        path,
       });
       router.push("/");
     } catch (e) {
