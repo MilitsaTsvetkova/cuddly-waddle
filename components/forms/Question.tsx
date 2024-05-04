@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,8 +23,9 @@ import { Badge } from "../ui/badge";
 
 const type: any = "create";
 
-export function Question() {
+export function Question({ mongoUserId }: { mongoUserId: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
@@ -43,7 +45,13 @@ export function Question() {
     try {
       // MAKE API CALL
       // Navigate to the question page
-      await createQuestion(values);
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      });
+      router.push("/");
     } catch (e) {
       console.log(e);
     } finally {
