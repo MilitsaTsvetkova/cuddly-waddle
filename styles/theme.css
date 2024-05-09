@@ -176,11 +176,11 @@
   }
 
   .shadow-light100_dark100 {
-    @apply shadow-light-100 dark:shadow-dark-100;
+    @apply shadow-gray-100 dark:shadow-dark-100;
   }
 
   .shadow-light100_darknone {
-    @apply shadow-light-100 dark:shadow-none;
+    @apply shadow-gray-100 dark:shadow-none;
   }
 
   .primary-gradient {
