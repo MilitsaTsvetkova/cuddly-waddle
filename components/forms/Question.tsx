@@ -17,7 +17,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createQuestion } from "../../lib/actions/question.action";
-import { questionSchema } from "../../lib/validations/questionSchema";
+import { questionSchema } from "../../lib/validations/question.schema";
 import TextEditor from "../editor/TextEditor";
 import { Badge } from "../ui/badge";
 
@@ -104,7 +104,7 @@ export function Question({ mongoUserId }: { mongoUserId: string }) {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title <span className="text-primary/50">*</span>
+                Question Title <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Input
@@ -127,7 +127,7 @@ export function Question({ mongoUserId }: { mongoUserId: string }) {
             <FormItem className="flex w-full flex-col gap-3">
               <FormLabel>
                 Detailed Explanation of your problem
-                <span className="text-primary/50">*</span>
+                <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <TextEditor field={field} />
@@ -146,7 +146,7 @@ export function Question({ mongoUserId }: { mongoUserId: string }) {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Tags<span className="text-primary/50">*</span>
+                Tags<span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <>

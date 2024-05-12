@@ -1,8 +1,10 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
+import { useTheme } from "../../context/ThemeProvider";
 
 export default function TextEditor({ field }: any) {
   const editorRef = useRef(null);
+  const { mode } = useTheme();
 
   return (
     <Editor
@@ -41,6 +43,8 @@ export default function TextEditor({ field }: any) {
           "codesample | bold italic forecolor | alignleft aligncenter " +
           "alignright alignjustify | bullist numlist",
         content_style: "body { font-family:Inter; font-size:16px }",
+        skin: mode === "dark" ? "oxide-dark" : "oxide",
+        content_css: mode === "dark" ? "dark" : "light",
       }}
     />
   );

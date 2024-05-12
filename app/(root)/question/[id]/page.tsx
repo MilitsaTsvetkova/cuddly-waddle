@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Answer from "../../../../components/forms/Answer";
 import Metric from "../../../../components/shared/metric/Metric";
 import ParseHTML from "../../../../components/shared/parseHTML/ParseHTML";
 import Tag from "../../../../components/shared/tag/Tag";
@@ -63,6 +64,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           <Tag key={tag._id} id={tag._id} name={tag.name} showCount={false} />
         ))}
       </div>
+      <Answer />
     </>
   );
 };
