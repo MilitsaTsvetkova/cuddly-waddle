@@ -38,7 +38,7 @@ body {
   }
 
   .markdown {
-    @apply max-w-full prose dark:prose-p:text-zinc-700 dark:prose-ol:text-zinc-700 dark:prose-ul:text-zinc-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-dark-400 prose-h1:text-dark-300 prose-h2:text-dark-300 prose-p:text-dark-500 prose-ul:text-dark-500 prose-ol:text-dark-500;
+    @apply max-w-full prose dark:prose-p:text-zinc-700 dark:prose-ol:text-zinc-700 dark:prose-ul:text-zinc-500 dark:prose-strong:text-white dark:prose-headings:text-white prose-headings:text-gray-400 prose-h1:text-gray-300 prose-h2:text-gray-300 prose-p:text-gray-500 prose-ul:text-gray-500 prose-ol:text-gray-500;
   }
 
   .primary-gradient {

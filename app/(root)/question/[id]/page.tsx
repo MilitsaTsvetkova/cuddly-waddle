@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Metric from "../../../../components/shared/metric/Metric";
 import ParseHTML from "../../../../components/shared/parseHTML/ParseHTML";
+import Tag from "../../../../components/shared/tag/Tag";
 import { getQuestionById } from "../../../../lib/actions/question.action";
 import { getTimestamp } from "../../../../lib/dates";
 import { formatNumber } from "../../../../lib/numbers";
@@ -57,6 +58,11 @@ const page = async ({ params }: { params: { id: string } }) => {
         />
       </div>
       <ParseHTML content={question.content} />
+      <div>
+        {question.tags.map((tag: any) => (
+          <Tag key={tag._id} id={tag._id} name={tag.name} showCount={false} />
+        ))}
+      </div>
     </>
   );
 };

@@ -33,8 +33,8 @@ interface Props {
 const ParseHTML = ({ content }: Props) => {
   useEffect(() => {
     Prism.highlightAll();
-  });
-  return <div>{parse(content)}</div>;
+  }, []);
+  return <div className="markdown w-full min-w-full">{parse(content)}</div>;
 };
 
 export default ParseHTML;
