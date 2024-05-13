@@ -2,6 +2,10 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
+  downvoteAnswer,
+  upvoteAnswer,
+} from "../../../lib/actions/answer.action";
+import {
   downVoteQuestion,
   upvoteQuestion,
 } from "../../../lib/actions/question.action";
@@ -12,9 +16,9 @@ interface Props {
   itemId: string;
   userId: string;
   upvotes: number;
-  hasUpvoted: boolean;
+  hasupVoted: boolean;
   downvotes: number;
-  hasDownvoted: boolean;
+  hasdownVoted: boolean;
   hasSaved?: boolean;
 }
 
@@ -23,9 +27,9 @@ const Votes = ({
   itemId,
   userId,
   upvotes,
-  hasUpvoted,
+  hasupVoted,
   downvotes,
-  hasDownvoted,
+  hasdownVoted,
   hasSaved,
 }: Props) => {
   const pathname = usePathname();
@@ -37,18 +41,18 @@ const Votes = ({
         await upvoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
-          hasupVoted: hasUpvoted,
-          hasdownVoted: hasDownvoted,
+          hasupVoted,
+          hasdownVoted,
           path: pathname,
         });
       } else if (type === "answer") {
-        // await upvoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted: hasUpvoted,
-        //   hasdownVoted: hasDownvoted,
-        //   path: pathname,
-        // });
+        await upvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
     }
 
@@ -57,18 +61,18 @@ const Votes = ({
         await downVoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
-          hasupVoted: hasUpvoted,
-          hasdownVoted: hasDownvoted,
+          hasupVoted,
+          hasdownVoted,
           path: pathname,
         });
       } else if (type === "answer") {
-        // await downvoteAnswer({
-        //   questionId: JSON.parse(itemId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted: hasUpvoted,
-        //   hasdownVoted: hasDownvoted,
-        //   path: pathname,
-        // });
+        await downvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
     }
     // TODO:add a toast
@@ -79,7 +83,7 @@ const Votes = ({
         <div className="flex-center gap-1.5">
           <Image
             src={
-              hasUpvoted
+              hasupVoted
                 ? "/assets/icons/upvoted.svg"
                 : "/assets/icons/upvote.svg"
             }
@@ -97,7 +101,7 @@ const Votes = ({
         <div className="flex-center gap-1.5">
           <Image
             src={
-              hasDownvoted
+              hasdownVoted
                 ? "/assets/icons/downvoted.svg"
                 : "/assets/icons/downvote.svg"
             }
@@ -113,17 +117,19 @@ const Votes = ({
           </div>
         </div>
       </div>
-      <Image
-        src={
-          hasSaved
-            ? "/assets/icons/star-filled.svg"
-            : "/assets/icons/star-red.svg"
-        }
-        width={18}
-        height={18}
-        alt="star"
-        onClick={handleSave}
-      />
+      {type === "question" && (
+        <Image
+          src={
+            hasSaved
+              ? "/assets/icons/star-filled.svg"
+              : "/assets/icons/star-red.svg"
+          }
+          width={18}
+          height={18}
+          alt="star"
+          onClick={handleSave}
+        />
+      )}
     </div>
   );
 };

@@ -5,7 +5,11 @@ import Answer from "../../database/answer.model";
 import Question from "../../database/question.model";
 import User from "../../database/user.model";
 import { connectToDatabase } from "../mongoose";
-import { CreateAnswerParams, GetAnswersParams } from "./shared.types";
+import {
+  AnswerVoteParams,
+  CreateAnswerParams,
+  GetAnswersParams,
+} from "./shared.types";
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
@@ -44,6 +48,67 @@ export async function getAnswers(params: GetAnswersParams) {
     return { answers };
   } catch (e) {
     console.error(e);
+    throw e;
+  }
+}
+
+export async function upvoteAnswer(params: AnswerVoteParams) {
+  try {
+    connectToDatabase();
+    const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+    let updateQuery = {};
+    if (hasupVoted) {
+      updateQuery = { $pull: { upvotes: userId } };
+    } else if (hasdownVoted) {
+      updateQuery = {
+        $pull: { downvotes: userId },
+        $push: { upvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { upvotes: userId } };
+    }
+    const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
+      new: true,
+    });
+    if (!answer) {
+      throw new Error("Question not found");
+    }
+
+    // update user's reputation
+
+    revalidatePath(path);
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+export async function downvoteAnswer(params: AnswerVoteParams) {
+  try {
+    connectToDatabase();
+    const { answerId, userId, hasupVoted, hasdownVoted, path } = params;
+    let updateQuery = {};
+    if (hasdownVoted) {
+      updateQuery = { $pull: { downvotes: userId } };
+    } else if (hasupVoted) {
+      updateQuery = {
+        $pull: { upvotes: userId },
+        $push: { downvotes: userId },
+      };
+    } else {
+      updateQuery = { $addToSet: { downvotes: userId } };
+    }
+    const answer = await Answer.findByIdAndUpdate(answerId, updateQuery, {
+      new: true,
+    });
+    if (!answer) {
+      throw new Error("Answer not found");
+    }
+
+    // update user's reputation
+
+    revalidatePath(path);
+  } catch (e) {
+    console.log(e);
     throw e;
   }
 }

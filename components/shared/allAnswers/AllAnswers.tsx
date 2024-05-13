@@ -5,6 +5,7 @@ import { getAnswers } from "../../../lib/actions/answer.action";
 import { getTimestamp } from "../../../lib/dates";
 import { Filters } from "../../filters/Filters";
 import ParseHTML from "../parseHTML/ParseHTML";
+import Votes from "../votes/Votes";
 interface Props {
   questionId: string;
   authorId: string;
@@ -15,6 +16,7 @@ interface Props {
 
 const AllAnswers = async ({ questionId, authorId, totalAnswers }: Props) => {
   const { answers } = await getAnswers({ questionId });
+  console.log(JSON.stringify(answers));
 
   return (
     <div className="mt-11">
@@ -48,7 +50,17 @@ const AllAnswers = async ({ questionId, authorId, totalAnswers }: Props) => {
                     </p>
                   </div>
                 </Link>
-                <div>VOTING</div>
+                <div className="flex justify-end">
+                  <Votes
+                    type="answer"
+                    itemId={JSON.stringify(answer._id)}
+                    userId={authorId}
+                    upvotes={answer.upvotes.length}
+                    hasupVoted={answer.upvotes.includes(authorId)}
+                    downvotes={answer.downvotes.length}
+                    hasdownVoted={answer.downvotes.includes(authorId)}
+                  />
+                </div>
               </div>
             </div>
             <ParseHTML content={answer.content} />
