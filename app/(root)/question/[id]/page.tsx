@@ -6,6 +6,7 @@ import AllAnswers from "../../../../components/shared/allAnswers/AllAnswers";
 import Metric from "../../../../components/shared/metric/Metric";
 import ParseHTML from "../../../../components/shared/parseHTML/ParseHTML";
 import Tag from "../../../../components/shared/tag/Tag";
+import Votes from "../../../../components/shared/votes/Votes";
 import { getQuestionById } from "../../../../lib/actions/question.action";
 import { getUserById } from "../../../../lib/actions/user.action";
 import { getTimestamp } from "../../../../lib/dates";
@@ -18,6 +19,7 @@ const page = async ({ params }: { params: { id: string } }) => {
     mongoUser = await getUserById({ userId: clerkId });
   }
   const { question } = await getQuestionById({ questionId: params.id });
+  console.log(question);
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -37,7 +39,18 @@ const page = async ({ params }: { params: { id: string } }) => {
               {question.author.name}
             </p>
           </Link>
-          <div className="flex justify-end">Voting</div>
+          <div className="flex justify-end">
+            <Votes
+              type="question"
+              itemId={JSON.stringify(question._id)}
+              userId={JSON.stringify(mongoUser._id)}
+              upvotes={question.upvotes.length}
+              hasUpvoted={question.upvotes.includes(mongoUser._id)}
+              downvotes={question.downvotes.length}
+              hasDownvoted={question.downvotes.includes(mongoUser._id)}
+              hasSaved={mongoUser?.saved.includes(question._id)}
+            />
+          </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
           {question.title}
