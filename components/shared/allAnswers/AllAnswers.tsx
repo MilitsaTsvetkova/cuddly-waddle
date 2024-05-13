@@ -8,13 +8,13 @@ import ParseHTML from "../parseHTML/ParseHTML";
 import Votes from "../votes/Votes";
 interface Props {
   questionId: string;
-  authorId: string;
+  userId: string;
   totalAnswers: number;
   page?: number;
   filter?: string;
 }
 
-const AllAnswers = async ({ questionId, authorId, totalAnswers }: Props) => {
+const AllAnswers = async ({ questionId, userId, totalAnswers }: Props) => {
   const { answers } = await getAnswers({ questionId });
 
   return (
@@ -53,11 +53,11 @@ const AllAnswers = async ({ questionId, authorId, totalAnswers }: Props) => {
                   <Votes
                     type="answer"
                     itemId={JSON.stringify(answer._id)}
-                    userId={authorId}
+                    userId={JSON.stringify(userId)}
                     upvotes={answer.upvotes.length}
-                    hasupVoted={answer.upvotes.includes(authorId)}
+                    hasupVoted={answer.upvotes.includes(userId)}
                     downvotes={answer.downvotes.length}
-                    hasdownVoted={answer.downvotes.includes(authorId)}
+                    hasdownVoted={answer.downvotes.includes(userId)}
                   />
                 </div>
               </div>
