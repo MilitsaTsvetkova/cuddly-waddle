@@ -9,6 +9,7 @@ import {
   downVoteQuestion,
   upvoteQuestion,
 } from "../../../lib/actions/question.action";
+import { toggleSaveQuestion } from "../../../lib/actions/user.action";
 import { formatNumber } from "../../../lib/numbers";
 
 interface Props {
@@ -33,7 +34,15 @@ const Votes = ({
   hasSaved,
 }: Props) => {
   const pathname = usePathname();
-  const handleSave = () => {};
+
+  const handleSave = async () => {
+    await toggleSaveQuestion({
+      questionId: JSON.parse(itemId),
+      userId: JSON.parse(userId),
+      path: pathname,
+    });
+  };
+
   const handleVote = async (action: "upvote" | "downvote") => {
     if (!userId) return;
     if (action === "upvote") {
