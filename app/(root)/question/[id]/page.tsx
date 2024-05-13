@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import Answer from "../../../../components/forms/Answer";
+import AllAnswers from "../../../../components/shared/allAnswers/AllAnswers";
 import Metric from "../../../../components/shared/metric/Metric";
 import ParseHTML from "../../../../components/shared/parseHTML/ParseHTML";
 import Tag from "../../../../components/shared/tag/Tag";
@@ -71,6 +72,11 @@ const page = async ({ params }: { params: { id: string } }) => {
           <Tag key={tag._id} id={tag._id} name={tag.name} showCount={false} />
         ))}
       </div>
+      <AllAnswers
+        questionId={question._id}
+        authorId={JSON.stringify(mongoUser._id)}
+        totalAnswers={question.answers.length}
+      />
       <Answer
         question={question.content}
         questionId={JSON.stringify(question._id)}
