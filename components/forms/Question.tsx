@@ -105,7 +105,8 @@ export function Question({ mongoUserId }: { mongoUserId: string }) {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title <span className="text-orange-500">*</span>
+                Question Title
+                <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Input
