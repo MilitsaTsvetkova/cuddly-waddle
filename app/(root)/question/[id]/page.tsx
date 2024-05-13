@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import Answer from "../../../../components/forms/Answer";
@@ -5,10 +6,16 @@ import Metric from "../../../../components/shared/metric/Metric";
 import ParseHTML from "../../../../components/shared/parseHTML/ParseHTML";
 import Tag from "../../../../components/shared/tag/Tag";
 import { getQuestionById } from "../../../../lib/actions/question.action";
+import { getUserById } from "../../../../lib/actions/user.action";
 import { getTimestamp } from "../../../../lib/dates";
 import { formatNumber } from "../../../../lib/numbers";
 
 const page = async ({ params }: { params: { id: string } }) => {
+  const { userId: clerkId } = auth();
+  let mongoUser;
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
   const { question } = await getQuestionById({ questionId: params.id });
   return (
     <>
@@ -64,7 +71,11 @@ const page = async ({ params }: { params: { id: string } }) => {
           <Tag key={tag._id} id={tag._id} name={tag.name} showCount={false} />
         ))}
       </div>
-      <Answer />
+      <Answer
+        question={question.content}
+        questionId={JSON.stringify(question._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
 };

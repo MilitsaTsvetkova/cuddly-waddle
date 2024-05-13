@@ -1,9 +1,7 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { useRef } from "react";
 import { useTheme } from "../../context/ThemeProvider";
 
-export default function TextEditor({ field }: any) {
-  const editorRef = useRef(null);
+export default function TextEditor({ field, editorRef }: any) {
   const { mode } = useTheme();
 
   return (
@@ -16,6 +14,12 @@ export default function TextEditor({ field }: any) {
       onBlur={field.onBlur}
       onEditorChange={(content) => {
         field.onChange(content);
+      }}
+      onReset={() => {
+        if (editorRef.current) {
+          const editor = editorRef.current as any;
+          editor.setContent("");
+        }
       }}
       initialValue="<p>This is the initial content of the editor.</p>"
       init={{

@@ -2,9 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { createAnswer } from "../../lib/actions/answer.action";
 import { answerSchema } from "../../lib/validations/answer.schema";
 import TextEditor from "../editor/TextEditor";
 import { Button } from "../ui/button";
@@ -16,7 +18,15 @@ import {
   FormMessage,
 } from "../ui/form";
 
-const Answer = () => {
+interface Props {
+  question: string;
+  questionId: string;
+  authorId: string;
+}
+
+const Answer = ({ question, questionId, authorId }: Props) => {
+  const editorRef = useRef(null);
+  const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<z.infer<typeof answerSchema>>({
     resolver: zodResolver(answerSchema),
@@ -24,8 +34,26 @@ const Answer = () => {
       answer: "",
     },
   });
-  const handleCreateAnswer = async (data: z.infer<typeof answerSchema>) => {};
-
+  const handleCreateAnswer = async (data: z.infer<typeof answerSchema>) => {
+    setIsSubmitting(true);
+    try {
+      await createAnswer({
+        question: JSON.parse(questionId),
+        content: data.answer,
+        author: JSON.parse(authorId),
+        path: pathname,
+      });
+      form.reset();
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent("");
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
@@ -57,7 +85,7 @@ const Answer = () => {
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl className="mt-3.5">
-                  <TextEditor field={field} />
+                  <TextEditor field={field} editorRef={editorRef} />
                 </FormControl>
                 <FormMessage className="text-red-500" />
               </FormItem>

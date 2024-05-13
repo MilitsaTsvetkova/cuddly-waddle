@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createQuestion } from "../../lib/actions/question.action";
@@ -24,6 +24,7 @@ import { Badge } from "../ui/badge";
 const type: any = "create";
 
 export function Question({ mongoUserId }: { mongoUserId: string }) {
+  const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const path = usePathname();
@@ -130,7 +131,7 @@ export function Question({ mongoUserId }: { mongoUserId: string }) {
                 <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
-                <TextEditor field={field} />
+                <TextEditor field={field} editorRef={editorRef} />
               </FormControl>
               <FormDescription>
                 Introduce the problem and expand on what you put in the title.
