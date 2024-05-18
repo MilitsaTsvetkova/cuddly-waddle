@@ -3,6 +3,7 @@ import { auth, SignedIn } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import ProfileLink from "../../../../components/shared/profileLink/ProfileLink";
+import QuestionTab from "../../../../components/shared/questionTab/QuestionTab";
 import Stats from "../../../../components/shared/stats/Stats";
 import { Button } from "../../../../components/ui/button";
 import { getUserInfo } from "../../../../lib/actions/user.action";
@@ -82,7 +83,14 @@ const page = async ({ params, searchParams }: URLProps) => {
               Answers
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="top-posts">POSTs</TabsContent>
+          <TabsContent value="top-posts">
+            {" "}
+            <QuestionTab
+              searchParams={searchParams}
+              userId={user._id}
+              clerkId={clerkId}
+            />
+          </TabsContent>
           <TabsContent value="answers">Answers</TabsContent>
         </Tabs>
       </div>

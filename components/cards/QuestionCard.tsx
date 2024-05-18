@@ -7,10 +7,12 @@ import Tag from "../shared/tag/Tag";
 
 interface Props {
   question: Question;
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({
   question: { title, createdAt, _id, tags, upvotes, answers, views, author },
+  clerkId,
 }: Props) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
