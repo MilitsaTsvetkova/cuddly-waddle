@@ -55,9 +55,31 @@ export interface Question {
     _id: string;
     name: string;
     picture: string;
+    clerkId: string;
   };
   upvotes: string[];
   views: number;
   answers: Array<object>;
   createdAt: Date;
+}
+
+export interface Answer {
+  _id: string;
+  question: {
+    _id: string;
+    title: string;
+  };
+  author: {
+    _id: string;
+    clerkId: string;
+    name: string;
+    picture: string;
+  };
+  upvotes: number;
+  createdAt: Date;
+}
+
+export enum EntityType {
+  QUESTION = "question",
+  ANSWER = "answer",
 }

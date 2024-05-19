@@ -13,9 +13,10 @@ import {
 } from "../../../lib/actions/question.action";
 import { toggleSaveQuestion } from "../../../lib/actions/user.action";
 import { formatNumber } from "../../../lib/numbers";
+import { EntityType } from "../../../types/index.d";
 
 interface Props {
-  type: "question" | "answer";
+  type: EntityType;
   itemId: string;
   userId: string;
   upvotes: number;
@@ -56,7 +57,7 @@ const Votes = ({
   const handleVote = async (action: "upvote" | "downvote") => {
     if (!userId) return;
     if (action === "upvote") {
-      if (type === "question") {
+      if (type === EntityType.QUESTION) {
         await upvoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
@@ -64,7 +65,7 @@ const Votes = ({
           hasdownVoted,
           path: pathname,
         });
-      } else if (type === "answer") {
+      } else if (type === EntityType.ANSWER) {
         await upvoteAnswer({
           answerId: JSON.parse(itemId),
           userId: JSON.parse(userId),
@@ -76,7 +77,7 @@ const Votes = ({
     }
 
     if (action === "downvote") {
-      if (type === "question") {
+      if (type === EntityType.QUESTION) {
         await downVoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
@@ -84,7 +85,7 @@ const Votes = ({
           hasdownVoted,
           path: pathname,
         });
-      } else if (type === "answer") {
+      } else if (type === EntityType.ANSWER) {
         await downvoteAnswer({
           answerId: JSON.parse(itemId),
           userId: JSON.parse(userId),

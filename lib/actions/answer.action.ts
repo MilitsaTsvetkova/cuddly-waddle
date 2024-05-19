@@ -2,12 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import Answer from "../../database/answer.model";
+import Interaction from "../../database/interaction.model";
 import Question from "../../database/question.model";
 import User from "../../database/user.model";
 import { connectToDatabase } from "../mongoose";
 import {
   AnswerVoteParams,
   CreateAnswerParams,
+  DeleteAnswerParams,
   GetAnswersParams,
 } from "./shared.types";
 
@@ -106,6 +108,30 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
 
     // update user's reputation
 
+    revalidatePath(path);
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+
+export async function deleteAnswer(params: DeleteAnswerParams) {
+  try {
+    connectToDatabase();
+    const { answerId, path } = params;
+    const answer = await Answer.findById(answerId);
+    if (!answer) {
+      throw new Error("Answer not found");
+    }
+
+    await answer.deleteOne({ _id: answerId });
+
+    await Question.updateMany(
+      { _id: answer.question },
+      { $pull: { answers: answerId } }
+    );
+
+    await Interaction.deleteMany({ answer: answerId });
     revalidatePath(path);
   } catch (e) {
     console.log(e);

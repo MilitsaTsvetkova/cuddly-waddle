@@ -1,25 +1,14 @@
+import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { getTimestamp } from "../../lib/dates";
 import { formatNumber } from "../../lib/numbers";
+import { Answer, EntityType } from "../../types/index.d";
+import EditDeleteAction from "../shared/editDeleteAction/EditDeleteAction";
 import Metric from "../shared/metric/Metric";
 
 interface Props {
   clerkId?: string | null;
-  answer: {
-    _id: string;
-    question: {
-      _id: string;
-      title: string;
-    };
-    author: {
-      _id: string;
-      clerkId: string;
-      name: string;
-      picture: string;
-    };
-    upvotes: number;
-    createdAt: Date;
-  };
+  answer: Answer;
 }
 
 const AnswerCard = ({
@@ -43,11 +32,14 @@ const AnswerCard = ({
           </h3>
         </div>
 
-        {/* <SignedIn>
+        <SignedIn>
           {showActionButtons && (
-            <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
+            <EditDeleteAction
+              type={EntityType.ANSWER}
+              itemId={JSON.stringify(_id)}
+            />
           )}
-        </SignedIn> */}
+        </SignedIn>
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">

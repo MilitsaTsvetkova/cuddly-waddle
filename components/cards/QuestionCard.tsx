@@ -1,7 +1,9 @@
+import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { getTimestamp } from "../../lib/dates";
 import { formatNumber } from "../../lib/numbers";
-import { Question } from "../../types";
+import { EntityType, Question } from "../../types/index.d";
+import EditDeleteAction from "../shared/editDeleteAction/EditDeleteAction";
 import Metric from "../shared/metric/Metric";
 import Tag from "../shared/tag/Tag";
 
@@ -14,6 +16,7 @@ const QuestionCard = ({
   question: { title, createdAt, _id, tags, upvotes, answers, views, author },
   clerkId,
 }: Props) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -27,7 +30,14 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
-        {/* ToDo: if signed in, add edit/delete actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction
+              type={EntityType.QUESTION}
+              itemId={JSON.stringify(_id)}
+            />
+          )}
+        </SignedIn>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
