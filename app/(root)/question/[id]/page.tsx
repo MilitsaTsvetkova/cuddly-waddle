@@ -11,6 +11,7 @@ import { getQuestionById } from "../../../../lib/actions/question.action";
 import { getUserById } from "../../../../lib/actions/user.action";
 import { getTimestamp } from "../../../../lib/dates";
 import { formatNumber } from "../../../../lib/numbers";
+import { EntityType } from "../../../../types/index.d";
 
 const page = async ({ params }: { params: { id: string } }) => {
   const { userId: clerkId } = auth();
@@ -41,7 +42,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           </Link>
           <div className="flex justify-end">
             <Votes
-              type="question"
+              type={EntityType.QUESTION}
               itemId={JSON.stringify(question._id)}
               userId={JSON.stringify(mongoUser._id)}
               upvotes={question.upvotes.length}

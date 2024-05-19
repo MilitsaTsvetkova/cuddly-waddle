@@ -132,6 +132,7 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
     );
 
     await Interaction.deleteMany({ answer: answerId });
+
     revalidatePath(path);
   } catch (e) {
     console.log(e);
