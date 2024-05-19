@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { auth, SignedIn } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import AnswerTab from "../../../../components/shared/answerTab/AnswerTab";
 import ProfileLink from "../../../../components/shared/profileLink/ProfileLink";
 import QuestionTab from "../../../../components/shared/questionTab/QuestionTab";
 import Stats from "../../../../components/shared/stats/Stats";
@@ -84,14 +85,19 @@ const page = async ({ params, searchParams }: URLProps) => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="top-posts">
-            {" "}
             <QuestionTab
               searchParams={searchParams}
               userId={user._id}
               clerkId={clerkId}
             />
           </TabsContent>
-          <TabsContent value="answers">Answers</TabsContent>
+          <TabsContent value="answers" className="flex w-full flex-col">
+            <AnswerTab
+              searchParams={searchParams}
+              userId={user._id}
+              clerkId={clerkId}
+            />
+          </TabsContent>
         </Tabs>
       </div>
     </>
