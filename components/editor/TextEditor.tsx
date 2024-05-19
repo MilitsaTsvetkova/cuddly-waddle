@@ -15,13 +15,7 @@ export default function TextEditor({ field, editorRef }: any) {
       onEditorChange={(content) => {
         field.onChange(content);
       }}
-      onReset={() => {
-        if (editorRef.current) {
-          const editor = editorRef.current as any;
-          editor.setContent("");
-        }
-      }}
-      initialValue="<p>This is the initial content of the editor.</p>"
+      initialValue={field.value || ""}
       init={{
         height: 350,
         menubar: false,

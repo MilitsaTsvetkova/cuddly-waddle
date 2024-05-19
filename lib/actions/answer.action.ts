@@ -118,19 +118,20 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
 export async function deleteAnswer(params: DeleteAnswerParams) {
   try {
     connectToDatabase();
+
     const { answerId, path } = params;
+
     const answer = await Answer.findById(answerId);
+
     if (!answer) {
       throw new Error("Answer not found");
     }
 
     await answer.deleteOne({ _id: answerId });
-
     await Question.updateMany(
       { _id: answer.question },
       { $pull: { answers: answerId } }
     );
-
     await Interaction.deleteMany({ answer: answerId });
 
     revalidatePath(path);

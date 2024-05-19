@@ -12,6 +12,7 @@ interface Props {
 
 const EditDeleteAction = ({ type, itemId }: Props) => {
   const pathname = usePathname();
+  console.log("pathname", pathname);
   const router = useRouter();
   const handleEdit = () => {
     router.push(`/question/edit/${JSON.parse(itemId)}`);
