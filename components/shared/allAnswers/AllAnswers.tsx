@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AnswerFilters } from "../../../constants/filters";
 import { getAnswers } from "../../../lib/actions/answer.action";
 import { getTimestamp } from "../../../lib/dates";
+import { EntityType } from "../../../types/index.d";
 import { Filters } from "../../filters/Filters";
 import ParseHTML from "../parseHTML/ParseHTML";
 import Votes from "../votes/Votes";
@@ -51,7 +52,7 @@ const AllAnswers = async ({ questionId, userId, totalAnswers }: Props) => {
                 </Link>
                 <div className="flex justify-end">
                   <Votes
-                    type="answer"
+                    type={EntityType.ANSWER}
                     itemId={JSON.stringify(answer._id)}
                     userId={JSON.stringify(userId)}
                     upvotes={answer.upvotes.length}
