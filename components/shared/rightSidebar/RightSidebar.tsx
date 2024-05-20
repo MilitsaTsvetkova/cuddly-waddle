@@ -1,18 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getHotQuestions } from "../../../lib/actions/question.action";
+import { getTopPopularTags } from "../../../lib/actions/tag.action";
 import Tag from "../tag/Tag";
-
-const popularTags = [
-  { id: "1", name: "React", totalQuestion: 5 },
-  { id: "2", name: "Javascript", totalQuestion: 6 },
-  { id: "3", name: "PHP", totalQuestion: 45 },
-  { id: "4", name: "Java", totalQuestion: 58 },
-  { id: "5", name: "C#", totalQuestion: 34 },
-];
 
 const RightSidebar = async () => {
   const { hotQuestions } = await getHotQuestions();
+  const { popularTags } = await getTopPopularTags();
+
   return (
     <section
       className="background-light900_dark200 
@@ -55,10 +50,10 @@ const RightSidebar = async () => {
           <div className="mt-7 flex flex-col gap-4">
             {popularTags.map((tag) => (
               <Tag
-                key={tag.id}
-                id={tag.id}
+                key={tag._id}
+                id={tag._id}
                 name={tag.name}
-                totalQuestion={tag.totalQuestion}
+                totalQuestion={tag.numberOfQuestions}
                 showCount
               />
             ))}
