@@ -1,21 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getHotQuestions } from "../../../lib/actions/question.action";
 import Tag from "../tag/Tag";
-
-const hotQuestion = [
-  {
-    id: 1,
-    title: "How to create a new project in React?",
-  },
-  {
-    id: 2,
-    title: "How to create a new project in React?",
-  },
-  {
-    id: 3,
-    title: "How to create a new project in React?",
-  },
-];
 
 const popularTags = [
   { id: "1", name: "React", totalQuestion: 5 },
@@ -25,7 +11,8 @@ const popularTags = [
   { id: "5", name: "C#", totalQuestion: 34 },
 ];
 
-const RightSidebar = () => {
+const RightSidebar = async () => {
+  const { hotQuestions } = await getHotQuestions();
   return (
     <section
       className="background-light900_dark200 
@@ -43,10 +30,10 @@ const RightSidebar = () => {
         <div>
           <h3 className="h3-bold text-dark200_light900">Top Questions</h3>
           <div className="mt-7 flex w-full flex-col gap-[30px]">
-            {hotQuestion.map((question) => (
+            {hotQuestions.map((question) => (
               <Link
                 key={question.id}
-                href={`/questions/${question.id}`}
+                href={`/question/${question.id}`}
                 className="flex cursor-pointer items-center justify-between gap-7 "
               >
                 <p className="body-medium text-dark500_light700">
