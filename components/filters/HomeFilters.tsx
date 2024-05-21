@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 const HomeFilters = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState(searchParams.get("filter") ?? "");
   const handleTypeClick = (item: string): void => {
     // Added type annotation
     if (active === item) {

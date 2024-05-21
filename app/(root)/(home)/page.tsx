@@ -10,7 +10,10 @@ import { getQuestions } from "../../../lib/actions/question.action";
 import { SearchParamsProps } from "../../../types";
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  const { questions } = await getQuestions({ searchQuery: searchParams.q });
+  const { questions } = await getQuestions({
+    searchQuery: searchParams.q,
+    filter: searchParams.filter,
+  });
 
   return (
     <>
