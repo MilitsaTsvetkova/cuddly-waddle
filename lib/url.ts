@@ -1,4 +1,4 @@
-import qs from "query-string";
+import qs, { StringifiableRecord } from "query-string";
 
 interface UrlQueryParams {
   params: string;
@@ -9,13 +9,7 @@ interface UrlQueryParams {
 export const formUrlQuery = ({ params, key, value }: UrlQueryParams) => {
   const currentUrl = qs.parse(params);
   currentUrl[key] = value;
-  return qs.stringifyUrl(
-    {
-      url: window.location.pathname,
-      query: currentUrl,
-    },
-    { skipNull: true }
-  );
+  return stringifyUrl(currentUrl);
 };
 
 interface RemoveUrlQueryParams {
@@ -33,6 +27,10 @@ export const removeKeysFromQuery = ({
     delete currentUrl[key];
   });
 
+  return stringifyUrl(currentUrl);
+};
+
+const stringifyUrl = (currentUrl: StringifiableRecord) => {
   return qs.stringifyUrl(
     {
       url: window.location.pathname,
