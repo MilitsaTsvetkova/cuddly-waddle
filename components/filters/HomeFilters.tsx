@@ -5,11 +5,12 @@ import { HomePageFilters } from "../../constants/filters";
 import { formUrlQuery } from "../../lib/url";
 import { Button } from "../ui/button";
 
-const HomeFilters = (item: string) => {
+const HomeFilters = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [active, setActive] = useState("");
-  const handleTypeClick = (item: string) => {
+  const handleTypeClick = (item: string): void => {
+    // Added type annotation
     if (active === item) {
       setActive("");
       const newUrl = formUrlQuery({
