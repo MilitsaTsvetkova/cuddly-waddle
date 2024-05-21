@@ -5,11 +5,15 @@ import NoResult from "../../../components/shared/noResult/NoResult";
 import LocalSearchBar from "../../../components/shared/search/LocalSearchBar";
 import { QuestionFilters } from "../../../constants/filters";
 import { getSavedQuestions } from "../../../lib/actions/user.action";
+import { SearchParamsProps } from "../../../types";
 
-const Home = async () => {
+const Home = async ({ searchParams }: SearchParamsProps) => {
   const { userId: clerkId } = auth();
   if (!clerkId) return null;
-  const { questions } = await getSavedQuestions({ clerkId });
+  const { questions } = await getSavedQuestions({
+    clerkId,
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
