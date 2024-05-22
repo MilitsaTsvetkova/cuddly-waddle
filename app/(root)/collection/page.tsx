@@ -13,6 +13,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
   const { questions } = await getSavedQuestions({
     clerkId,
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
   return (
@@ -21,7 +22,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
 
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar
-          route="/"
+          route="/collection"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"

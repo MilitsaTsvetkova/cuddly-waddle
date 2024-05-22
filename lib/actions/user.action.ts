@@ -143,7 +143,29 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
-    const { clerkId, searchQuery } = params;
+    const { clerkId, searchQuery, filter } = params;
+
+    let sortOptions = {};
+
+    switch (filter) {
+      case "most_recent":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "oldest":
+        sortOptions = { createdAt: 1 };
+        break;
+      case "most_voted":
+        sortOptions = { upvotes: -1 };
+        break;
+      case "most_viewed":
+        sortOptions = { views: -1 };
+        break;
+      case "most_answered":
+        sortOptions = { answers: -1 };
+        break;
+      default:
+        break;
+    }
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
       : {};
@@ -151,7 +173,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
       path: "saved",
       model: Question,
       match: query,
-      options: { sort: { createdAt: -1 } },
+      options: { sort: sortOptions },
       populate: [
         { path: "author", model: User, select: "_id clerkId name picture" },
         { path: "tags", model: Tag, select: "_id name" },
