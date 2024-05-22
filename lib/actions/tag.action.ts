@@ -32,12 +32,30 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDatabase();
-    const { searchQuery } = params;
+    const { searchQuery, filter } = params;
+    let sortOtions = {};
+
+    switch (filter) {
+      case "popular":
+        sortOtions = { questions: -1 };
+        break;
+      case "recent":
+        sortOtions = { createdAt: -1 };
+        break;
+      case "name":
+        sortOtions = { name: 1 };
+        break;
+      case "old":
+        sortOtions = { createdAt: 1 };
+        break;
+      default:
+        break;
+    }
     const query: FilterQuery<typeof Tag> = {};
     if (searchQuery) {
       query.$or = [{ name: { $regex: new RegExp(searchQuery, "i") } }];
     }
-    const tags = await Tag.find(query).sort({ createdAt: -1 });
+    const tags = await Tag.find(query).sort(sortOtions);
     return { tags };
   } catch (e) {
     console.log(e);

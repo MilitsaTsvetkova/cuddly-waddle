@@ -11,9 +11,15 @@ import { getQuestionById } from "../../../../lib/actions/question.action";
 import { getUserById } from "../../../../lib/actions/user.action";
 import { getTimestamp } from "../../../../lib/dates";
 import { formatNumber } from "../../../../lib/numbers";
-import { EntityType } from "../../../../types/index.d";
+import { EntityType, SearchParamsProps } from "../../../../types/index.d";
 
-const page = async ({ params }: { params: { id: string } }) => {
+interface Props extends SearchParamsProps {
+  params: {
+    id: string;
+  };
+}
+
+const page = async ({ params, searchParams }: Props) => {
   const { userId: clerkId } = auth();
   let mongoUser;
   if (clerkId) {
@@ -90,6 +96,8 @@ const page = async ({ params }: { params: { id: string } }) => {
         questionId={question._id}
         userId={mongoUser._id}
         totalAnswers={question.answers.length}
+        page={searchParams?.page}
+        filter={searchParams?.filter}
       />
       <Answer
         question={question.content}
