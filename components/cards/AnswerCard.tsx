@@ -57,7 +57,7 @@ const AnswerCard = ({
           <Metric
             imgUrl="/assets/icons/like.svg"
             alt="like icon"
-            value={formatNumber(upvotes)}
+            value={formatNumber(upvotes.length)}
             title=" Votes"
             textStyles="small-medium text-dark400_light800"
           />

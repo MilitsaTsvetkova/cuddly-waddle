@@ -5,6 +5,7 @@ import { getAnswers } from "../../../lib/actions/answer.action";
 import { getTimestamp } from "../../../lib/dates";
 import { EntityType } from "../../../types/index.d";
 import { Filters } from "../../filters/Filters";
+import Pagination from "../pagination/Pagination";
 import ParseHTML from "../parseHTML/ParseHTML";
 import Votes from "../votes/Votes";
 interface Props {
@@ -22,7 +23,7 @@ const AllAnswers = async ({
   filter,
   page,
 }: Props) => {
-  const { answers } = await getAnswers({
+  const { answers, isNext } = await getAnswers({
     questionId,
     sortBy: filter,
     page: page ? +page : 1,
@@ -76,6 +77,9 @@ const AllAnswers = async ({
             <ParseHTML content={answer.content} />
           </article>
         ))}
+      </div>
+      <div className="mt-10">
+        <Pagination pageNumber={page ? +page : 1} isNext={isNext} />
       </div>
     </div>
   );

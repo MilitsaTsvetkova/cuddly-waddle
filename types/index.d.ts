@@ -75,7 +75,7 @@ export interface Answer {
     name: string;
     picture: string;
   };
-  upvotes: number;
+  upvotes: string[];
   createdAt: Date;
 }
 
