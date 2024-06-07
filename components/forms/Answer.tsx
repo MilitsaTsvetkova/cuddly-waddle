@@ -40,7 +40,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     setIsSubmitting(true);
     try {
       await createAnswer({
-        question: JSON.parse(questionId),
+        questionId: JSON.parse(questionId),
         content: data.answer,
         author: JSON.parse(authorId),
         path: pathname,

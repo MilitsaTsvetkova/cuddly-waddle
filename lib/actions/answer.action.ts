@@ -17,14 +17,30 @@ export async function createAnswer(params: CreateAnswerParams) {
   try {
     connectToDatabase();
 
-    const { question, content, author, path } = params;
-    const answer = await Answer.create({ content, author, question });
+    const { questionId, content, author, path } = params;
+    const answer = await Answer.create({
+      content,
+      author,
+      question: questionId,
+    });
 
-    await Question.findByIdAndUpdate(question, {
+    const question = await Question.findByIdAndUpdate(questionId, {
       $push: { answers: answer._id },
     });
 
-    // TODO: add interaction
+    // create an interaction record for the user
+    await Interaction.create({
+      user: author,
+      question: questionId,
+      action: "answer",
+      answer: answer._id,
+      tags: question.tags,
+    });
+    // update ranking
+
+    await User.findByIdAndUpdate(author, {
+      $inc: { reputation: 10 },
+    });
 
     revalidatePath(path);
   } catch (e) {
@@ -100,6 +116,12 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
     }
 
     // update user's reputation
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 },
+    });
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 },
+    });
 
     revalidatePath(path);
   } catch (e) {
@@ -130,6 +152,12 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
     }
 
     // update user's reputation
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasdownVoted ? -2 : 2 },
+    });
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 },
+    });
 
     revalidatePath(path);
   } catch (e) {

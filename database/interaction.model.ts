@@ -13,7 +13,7 @@ const InteractionSchema = new Schema({
   action: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   question: { type: Schema.Types.ObjectId, ref: "Question" },
-  tag: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
+  tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
   answer: { type: Schema.Types.ObjectId, ref: "Answer" },
   createdAt: { type: Date, default: Date.now },
 });
