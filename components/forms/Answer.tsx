@@ -77,7 +77,14 @@ const Answer = ({ question, questionId, authorId }: Props) => {
       );
 
       const aiAnswer = await response.json();
-      alert(aiAnswer.reply);
+
+      // convert plain text to html format
+
+      const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
+      const editor = editorRef.current as any;
+      editor.setContent(formattedAnswer);
+
+      // :TODO add a toast notification
     } catch (error) {
       console.error(error);
       throw error;
@@ -93,17 +100,23 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         </h4>
         <Button
           className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-orange-500 shadow-none dark:text-orange-500"
-          onClick={() => generateAiAnswer()}
+          onClick={generateAiAnswer}
           disabled={isSubmittingAI}
         >
-          <Image
-            src="/assets/icons/stars.svg"
-            width={12}
-            height={12}
-            alt="AI"
-            className="object-contain"
-          />
-          Generate AI Answer
+          {isSubmittingAI ? (
+            "Generating..."
+          ) : (
+            <>
+              <Image
+                src="/assets/icons/stars.svg"
+                width={12}
+                height={12}
+                alt="AI"
+                className="object-contain"
+              />
+              Generate AI Answer
+            </>
+          )}
         </Button>
       </div>
       <Form {...form}>
