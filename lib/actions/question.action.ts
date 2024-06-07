@@ -41,9 +41,23 @@ export async function createQuestion(params: CreateQuestionParams) {
     });
 
     // create an interaction record for the user
+    await Interaction.create({
+      user: author,
+      question: question._id,
+      action: "ask_question",
+      tags: tagDocuments,
+    });
     // update ranking
+
+    await User.findByIdAndUpdate(author, {
+      $inc: { reputation: 5 },
+    });
+
     revalidatePath(path);
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
 }
 
 export async function getQuestions(params: GetQuestionsParams) {
@@ -129,7 +143,17 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
       throw new Error("Question not found");
     }
 
-    // update user's reputation
+    // update user's reputation for upvoting/revoking an upvote to the question
+
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -1 : 1 },
+    });
+
+    // increment retupation by 10/-10 for receiving an upvote/downvote to the question
+
+    await User.findByIdAndUpdate(question.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 },
+    });
 
     revalidatePath(path);
   } catch (e) {
