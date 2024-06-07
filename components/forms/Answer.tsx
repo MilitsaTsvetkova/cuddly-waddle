@@ -81,10 +81,13 @@ const Answer = ({ question, questionId, authorId }: Props) => {
       // convert plain text to html format
 
       const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
-      const editor = editorRef.current as any;
-      editor.setContent(formattedAnswer);
 
-      // :TODO add a toast notification
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent(formattedAnswer);
+      }
+
+      // TODO add a toast notification
     } catch (error) {
       console.error(error);
       throw error;
