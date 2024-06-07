@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { globalSearch } from "../../../lib/actions/general.action";
 import GlobalFilters from "./GlobalFilters";
 
 const GlobalSearchResults = () => {
@@ -22,6 +23,8 @@ const GlobalSearchResults = () => {
 
       try {
         // Fetch data from the server
+        const res = await globalSearch({ query: global, type });
+        setResults(JSON.parse(res));
       } catch (error) {
         console.log(error);
         throw error;
@@ -29,10 +32,21 @@ const GlobalSearchResults = () => {
         setIsLoading(false);
       }
     };
+    fetchResult();
   }, [global, type]);
 
   const renderLink = (type: string | null, id: string) => {
-    return "/";
+    switch (type) {
+      case "question":
+      case "answer":
+        return `/question/${id}`;
+      case "user":
+        return `/profile/${id}`;
+      case "tag":
+        return `/tags/${id}`;
+      default:
+        return "/";
+    }
   };
   return (
     <div className="absolute top-full z-10 mt-3 w-full rounded-xl bg-gray-300 py-5 shadow-sm dark:bg-zinc-400">
@@ -56,7 +70,7 @@ const GlobalSearchResults = () => {
             {results.length > 0 ? (
               results.map((item: any, index: number) => (
                 <Link
-                  href={renderLink(type, item.id)}
+                  href={renderLink(item.type, item.id)}
                   key={item.id + item.type + index}
                   className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-gray-200/50 dark:hover:bg-zinc-500/50 "
                 >
