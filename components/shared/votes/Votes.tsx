@@ -14,6 +14,7 @@ import {
 import { toggleSaveQuestion } from "../../../lib/actions/user.action";
 import { formatNumber } from "../../../lib/numbers";
 import { EntityType } from "../../../types/index.d";
+import { toast } from "../../ui/use-toast";
 
 interface Props {
   type: EntityType;
@@ -52,10 +53,19 @@ const Votes = ({
       userId: JSON.parse(userId),
       path: pathname,
     });
+
+    return toast({
+      title: `Question ${!hasupVoted ? "Saved in" : "Removed from your collection"}`,
+      variant: !hasSaved ? "default" : "destructive",
+    });
   };
 
   const handleVote = async (action: "upvote" | "downvote") => {
-    if (!userId) return;
+    if (!userId)
+      return toast({
+        title: "Please login to vote",
+        description: "You must be logged in to perform this action",
+      });
     if (action === "upvote") {
       if (type === EntityType.QUESTION) {
         await upvoteQuestion({
@@ -74,6 +84,10 @@ const Votes = ({
           path: pathname,
         });
       }
+      return toast({
+        title: `Upvote ${!hasupVoted ? "Successful" : "Removed"}`,
+        variant: !hasupVoted ? "default" : "destructive",
+      });
     }
 
     if (action === "downvote") {
@@ -94,6 +108,10 @@ const Votes = ({
           path: pathname,
         });
       }
+      return toast({
+        title: `Downvote ${!hasdownVoted ? "Successful" : "Removed"}`,
+        variant: !hasdownVoted ? "default" : "destructive",
+      });
     }
     // TODO:add a toast
   };
