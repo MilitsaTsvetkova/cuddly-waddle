@@ -1,6 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
+import { generateMockArray } from "../../../lib/utils";
 
 const Loading = () => {
   return (
@@ -29,7 +30,7 @@ const Loading = () => {
       </div>
 
       <div className="flex flex-col gap-6">
-        {[1, 2, 3, 4, 5].map((question) => (
+        {generateMockArray().map((question) => (
           <Skeleton key={question} className="h-48 w-full rounded-xl" />
         ))}
       </div>
