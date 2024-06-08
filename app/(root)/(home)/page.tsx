@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import Link from "next/link";
 import QuestionCard from "../../../components/cards/QuestionCard";
@@ -8,7 +9,10 @@ import Pagination from "../../../components/shared/pagination/Pagination";
 import LocalSearchBar from "../../../components/shared/search/LocalSearchBar";
 import { Button } from "../../../components/ui/button";
 import { HomePageFilters } from "../../../constants/filters";
-import { getQuestions } from "../../../lib/actions/question.action";
+import {
+  getQuestions,
+  getRecomendedQuestions as getRecommendedQuestions,
+} from "../../../lib/actions/question.action";
 import { SearchParamsProps } from "../../../types";
 
 export const metadata: Metadata = {
@@ -17,12 +21,29 @@ export const metadata: Metadata = {
 };
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  const { questions, isNext } = await getQuestions({
-    searchQuery: searchParams.q,
-    filter: searchParams.filter,
-    page: searchParams?.page ? +searchParams.page : 1,
-  });
-
+  const { userId } = auth();
+  let result;
+  if (searchParams.filter === "recommended") {
+    if (userId) {
+      result = await getRecommendedQuestions({
+        searchQuery: searchParams.q,
+        userId,
+        page: searchParams?.page ? +searchParams.page : 1,
+      });
+    } else {
+      result = {
+        questions: [],
+        isNext: false,
+      };
+    }
+  } else {
+    result = await getQuestions({
+      searchQuery: searchParams.q,
+      filter: searchParams.filter,
+      page: searchParams?.page ? +searchParams.page : 1,
+    });
+  }
+  const { questions, isNext } = result;
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">

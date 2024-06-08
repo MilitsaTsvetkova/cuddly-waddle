@@ -13,7 +13,7 @@ import {
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { userId } = params;
     const user = await User.findById(userId);
     if (!user) throw new Error("User not found");
@@ -31,7 +31,7 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 
 export async function getAllTags(params: GetAllTagsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { searchQuery, filter, page = 1, pageSize = 10 } = params;
     const skipAmount = (page - 1) * pageSize;
     let sortOtions = {};
@@ -71,7 +71,7 @@ export async function getAllTags(params: GetAllTagsParams) {
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { tagId, searchQuery, page = 1, pageSize = 10 } = params;
     const skipAmount = (page - 1) * pageSize;
     const tagFilter: FilterQuery<iTag> = { _id: tagId };
@@ -105,7 +105,7 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
 }
 export async function getTopPopularTags() {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const popularTags = await Tag.aggregate([
       {

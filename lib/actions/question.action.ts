@@ -15,11 +15,12 @@ import {
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
+  RecommendedParams,
 } from "./shared.types";
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { title, content, tags, author, path } = params;
     const question = await Question.create({ title, content, author });
 
@@ -62,7 +63,7 @@ export async function createQuestion(params: CreateQuestionParams) {
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { searchQuery, filter, page = 1, pageSize = 20 } = params;
 
     // calculate the number of posts to skip based on the page number and page size
@@ -106,7 +107,7 @@ export async function getQuestions(params: GetQuestionsParams) {
 }
 export async function getQuestionById(params: GetQuestionByIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId } = params;
     const question = await Question.findById(questionId)
       .populate({ path: "tags", model: Tag, select: "_id name" })
@@ -123,7 +124,7 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
 }
 export async function upvoteQuestion(params: QuestionVoteParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasupVoted) {
@@ -163,7 +164,7 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
 }
 export async function downVoteQuestion(params: QuestionVoteParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
     let updateQuery = {};
     if (hasdownVoted) {
@@ -200,7 +201,7 @@ export async function downVoteQuestion(params: QuestionVoteParams) {
 
 export async function deleteQuestion(params: DeleteQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, path } = params;
 
     await Question.deleteOne({ _id: questionId });
@@ -218,7 +219,7 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
 }
 export async function editQuestion(params: EditQuestionParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const { questionId, title, content } = params;
     const question = await Question.findById(questionId).populate("tags");
     if (!question) {
@@ -234,13 +235,73 @@ export async function editQuestion(params: EditQuestionParams) {
 }
 export async function getHotQuestions() {
   try {
-    connectToDatabase();
+    await connectToDatabase();
     // soring in descending order
     const hotQuestions = await Question.find({}).sort({
       views: -1,
       upvotes: -1,
     });
     return { hotQuestions };
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+}
+export async function getRecomendedQuestions(params: RecommendedParams) {
+  try {
+    await connectToDatabase();
+    const { userId, page = 1, searchQuery, pageSize = 10 } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const skipAmount = pageSize * (page - 1);
+
+    // find user's interactions
+
+    const userInteractions = await Interaction.find({ user: user._id })
+      .populate("tags")
+      .exec();
+
+    // extract tags from user's interaction
+
+    const userTags = userInteractions.reduce((acc, interaction) => {
+      if (interaction.tags) {
+        acc = acc.concat(interaction.tags);
+      }
+      return acc;
+    }, []);
+
+    // get distinct tag ids
+
+    const tagIds = [...new Set(userTags.map((tag) => tag._id))];
+
+    const query: FilterQuery<typeof Question> = {
+      $and: [
+        { tags: { $in: tagIds } }, // questions with user's tags
+        { author: { $ne: user._id } },
+      ], // exclude user's own questions
+    };
+
+    const totalQuestions = await Question.countDocuments(query);
+
+    const recommendedQuestions = await Question.find(query)
+      .populate({
+        path: "tags",
+        model: Tag,
+      })
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    const isNext = totalQuestions > skipAmount + recommendedQuestions.length;
+    return { questions: recommendedQuestions, isNext };
   } catch (e) {
     console.log(e);
     throw e;
