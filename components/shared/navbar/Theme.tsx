@@ -40,12 +40,12 @@ const Theme = () => {
         </MenubarTrigger>
         <MenubarContent
           className="absolute -right-12 mt-3 min-w-[120px]
-        rounded border bg-slate-100 py-2 dark:border-gray-400 dark:bg-gray-300"
+        rounded border bg-gray-100 py-2 dark:border-gray-400 dark:bg-gray-100 "
         >
           {themes.map(({ value, label, icon }) => (
             <MenubarItem
               key={value}
-              className=" flex items-center gap-4 px-2.5 py-2 dark:focus:bg-gray-400"
+              className=" flex cursor-pointer items-center gap-4 px-2.5 py-2 focus:bg-gray-200 dark:focus:bg-gray-400"
               onClick={() => {
                 setMode(value);
 
