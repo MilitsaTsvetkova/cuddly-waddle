@@ -72,7 +72,7 @@ const Profile = ({ clerkId, user }: Props) => {
           name="name"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light700">
                 Name <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl>
@@ -80,7 +80,7 @@ const Profile = ({ clerkId, user }: Props) => {
                   placeholder="Your Name"
                   {...field}
                   className="no-focus paragraph-regular light-border-2
-                  background-light700_dark300 text-dark300_light700
+                  background-light800_dark300 text-dark300_light700
                   min-h-[56px] border"
                 />
               </FormControl>
@@ -93,7 +93,7 @@ const Profile = ({ clerkId, user }: Props) => {
           name="username"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light700">
                 Username <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl>
@@ -101,7 +101,7 @@ const Profile = ({ clerkId, user }: Props) => {
                   placeholder="Your Username"
                   {...field}
                   className="no-focus paragraph-regular light-border-2
-                  background-light700_dark300 text-dark300_light700
+                  background-light800_dark300 text-dark300_light700
                   min-h-[56px] border"
                 />
               </FormControl>
@@ -114,14 +114,16 @@ const Profile = ({ clerkId, user }: Props) => {
           name="portfolioWebsite"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>Portfolio Link</FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light700">
+                Portfolio Link
+              </FormLabel>
               <FormControl>
                 <Input
                   type="url"
                   placeholder="Your Portfolio Link"
                   {...field}
                   className="no-focus paragraph-regular light-border-2
-                  background-light700_dark300 text-dark300_light700
+                  background-light800_dark300 text-dark300_light700
                   min-h-[56px] border"
                 />
               </FormControl>
@@ -134,7 +136,7 @@ const Profile = ({ clerkId, user }: Props) => {
           name="location"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light700">
                 Location <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl>
@@ -142,7 +144,7 @@ const Profile = ({ clerkId, user }: Props) => {
                   placeholder="Where are you from?"
                   {...field}
                   className="no-focus paragraph-regular light-border-2
-                  background-light700_dark300 text-dark300_light700
+                  background-light800_dark300 text-dark300_light700
                   min-h-[56px] border"
                 />
               </FormControl>
@@ -155,7 +157,7 @@ const Profile = ({ clerkId, user }: Props) => {
           name="bio"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light700">
                 Bio <span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl>
@@ -163,7 +165,7 @@ const Profile = ({ clerkId, user }: Props) => {
                   placeholder="What's special about you?"
                   {...field}
                   className="no-focus paragraph-regular light-border-2
-                  background-light700_dark300 text-dark300_light700
+                  background-light800_dark300 text-dark300_light700
                   min-h-[56px] border"
                 />
               </FormControl>

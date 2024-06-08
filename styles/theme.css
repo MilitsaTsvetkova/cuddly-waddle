@@ -48,11 +48,11 @@
   }
 
   .text-dark300_light700 {
-    @apply text-gray-300 dark:text-zinc-700;
+    @apply text-gray-400 dark:text-zinc-500;
   }
 
   .text-dark400_light700 {
-    @apply text-zinc-400 dark:text-zinc-700;
+    @apply text-gray-500 dark:text-zinc-400;
   }
 
   .text-dark500_light700 {
