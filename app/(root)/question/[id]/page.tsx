@@ -108,4 +108,12 @@ const page = async ({ params, searchParams }: Props) => {
   );
 };
 
+export async function generateMetadata({ params }: Props) {
+  const { question } = await getQuestionById({ questionId: params.id });
+  return {
+    title: question.title + " | Dev Overflow",
+    description: "Question Details page",
+  };
+}
+
 export default page;

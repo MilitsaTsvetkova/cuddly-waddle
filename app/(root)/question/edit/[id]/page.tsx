@@ -25,4 +25,12 @@ const page = async ({ params }: ParamsProps) => {
   );
 };
 
+export async function generateMetadata({ params }: ParamsProps) {
+  const { question } = await getQuestionById({ questionId: params.id });
+  return {
+    title: "Edit " + question.title + " | Dev Overflow",
+    description: "Edit Question Details page",
+  };
+}
+
 export default page;

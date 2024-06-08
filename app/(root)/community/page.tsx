@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import UserCard from "../../../components/cards/UserCard";
 import { Filters } from "../../../components/filters/Filters";
@@ -6,6 +7,11 @@ import LocalSearchBar from "../../../components/shared/search/LocalSearchBar";
 import { UserFilters } from "../../../constants/filters";
 import { getAllUsers } from "../../../lib/actions/user.action";
 import { SearchParamsProps } from "../../../types";
+
+export const metadata: Metadata = {
+  title: "Community | Dev Overflow",
+  description: "Community Page",
+};
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const { users, isNext } = await getAllUsers({

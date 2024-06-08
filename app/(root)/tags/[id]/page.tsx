@@ -50,4 +50,14 @@ const page = async ({ params, searchParams }: URLProps) => {
   );
 };
 
+export async function generateMetadata({ params }: URLProps) {
+  const { tagTitle } = await getQuestionsByTagId({
+    tagId: params.id,
+  });
+  return {
+    title: tagTitle + " | Dev Overflow",
+    description: "Tag Details page",
+  };
+}
+
 export default page;

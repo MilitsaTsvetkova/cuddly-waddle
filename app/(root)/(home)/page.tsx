@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import QuestionCard from "../../../components/cards/QuestionCard";
 import { Filters } from "../../../components/filters/Filters";
@@ -9,6 +10,11 @@ import { Button } from "../../../components/ui/button";
 import { HomePageFilters } from "../../../constants/filters";
 import { getQuestions } from "../../../lib/actions/question.action";
 import { SearchParamsProps } from "../../../types";
+
+export const metadata: Metadata = {
+  title: "Home | Dev Overflow",
+  description: "Home Page",
+};
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const { questions, isNext } = await getQuestions({

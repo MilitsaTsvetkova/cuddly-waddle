@@ -111,4 +111,14 @@ const page = async ({ params, searchParams }: URLProps) => {
   );
 };
 
+export async function generateMetadata({ params }: URLProps) {
+  const { user } = await getUserInfo({
+    userId: params.id,
+  });
+  return {
+    title: user.name + " | Dev Overflow",
+    description: "Profile Details",
+  };
+}
+
 export default page;

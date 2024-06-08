@@ -1,7 +1,13 @@
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import Profile from "../../../../components/forms/Profile";
 import { getUserById } from "../../../../lib/actions/user.action";
 import { ParamsProps } from "../../../../types";
+
+export const metadata: Metadata = {
+  title: "Edit Profile | Dev Overflow",
+  description: "Edit Profile Page",
+};
 
 const page = async ({ params }: ParamsProps) => {
   const { userId } = auth();

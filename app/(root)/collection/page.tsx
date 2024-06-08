@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs";
+import { Metadata } from "next";
 import QuestionCard from "../../../components/cards/QuestionCard";
 import { Filters } from "../../../components/filters/Filters";
 import NoResult from "../../../components/shared/noResult/NoResult";
@@ -7,6 +8,11 @@ import LocalSearchBar from "../../../components/shared/search/LocalSearchBar";
 import { QuestionFilters } from "../../../constants/filters";
 import { getSavedQuestions } from "../../../lib/actions/user.action";
 import { SearchParamsProps } from "../../../types";
+
+export const metadata: Metadata = {
+  title: "Collection | Dev Overflow",
+  description: "Collection Page",
+};
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const { userId: clerkId } = auth();
