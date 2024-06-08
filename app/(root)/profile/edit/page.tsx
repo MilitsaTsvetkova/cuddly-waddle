@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import Profile from "../../../../components/forms/Profile";
 import { getUserById } from "../../../../lib/actions/user.action";

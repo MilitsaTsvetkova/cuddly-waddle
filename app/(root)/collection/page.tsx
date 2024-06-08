@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import QuestionCard from "../../../components/cards/QuestionCard";
 import { Filters } from "../../../components/filters/Filters";

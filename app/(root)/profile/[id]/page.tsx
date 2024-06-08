@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { auth, SignedIn } from "@clerk/nextjs";
+import { SignedIn } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import AnswerTab from "../../../../components/shared/answerTab/AnswerTab";
