@@ -87,7 +87,7 @@ const page = async ({ params, searchParams }: Props) => {
         />
       </div>
       <ParseHTML content={question.content} />
-      <div>
+      <div className="mt-3.5 flex flex-wrap gap-2">
         {question.tags.map((tag: any) => (
           <Tag key={tag._id} id={tag._id} name={tag.name} showCount={false} />
         ))}
