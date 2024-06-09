@@ -7,7 +7,7 @@ export interface SidebarLink {
 }
 
 export interface Job {
-  id?: string;
+  job_id: string;
   employer_name?: string;
   employer_logo?: string | undefined;
   employer_website?: string;
@@ -18,6 +18,7 @@ export interface Job {
   job_city?: string;
   job_state?: string;
   job_country?: string;
+  job_max_salary: number | null;
 }
 
 export interface Country {
