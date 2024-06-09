@@ -22,7 +22,7 @@ body {
   }
 
   .card-wrapper {
-    @apply bg-gray-100 dark:dark-gradient shadow-gray-300 dark:shadow-gray-100;
+    @apply bg-gray-200 shadow-gray-500 dark:shadow-gray-100 dark:bg-gray-800;
   }
 
   .btn {

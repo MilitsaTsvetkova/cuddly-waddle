@@ -7,11 +7,7 @@ import Theme from "./Theme";
 
 const Navbar = () => {
   return (
-    <nav
-      className="background-light900_dark200 fixed z-50 
-    flex w-full justify-between gap-5 p-6 shadow-slate-300 
-    dark:shadow-none sm:px-12"
-    >
+    <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5  p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-1">
         <Image
           src="/assets/images/site-logo.svg"
@@ -23,7 +19,7 @@ const Navbar = () => {
           className="h2-bold font-spaceGrotesk
          text-gray-300 dark:text-zinc-100 max-sm:hidden"
         >
-          Dev <span className="text-zinc-500">OverFlow</span>
+          Dev<span className="text-zinc-500">OverFlow</span>
         </p>
       </Link>
       <GlobalSearch />

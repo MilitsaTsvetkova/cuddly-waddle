@@ -6,7 +6,7 @@ import { Toaster } from "../../components/ui/toaster";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <main className="background-light850_dark100 relative">
+    <main className="background-light900_dark200 relative">
       <Navbar />
       <div className="flex">
         <LeftSidebar />
