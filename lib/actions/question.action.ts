@@ -250,7 +250,7 @@ export async function getHotQuestions() {
 export async function getRecomendedQuestions(params: RecommendedParams) {
   try {
     await connectToDatabase();
-    const { userId, page = 1, searchQuery, pageSize = 10 } = params;
+    const { userId, page = 1, pageSize = 10 } = params;
 
     const user = await User.findOne({ clerkId: userId });
 
@@ -277,7 +277,7 @@ export async function getRecomendedQuestions(params: RecommendedParams) {
 
     // get distinct tag ids
 
-    const tagIds = [...new Set(userTags.map((tag) => tag._id))];
+    const tagIds = [...new Set(userTags.map((tag: any) => tag._id))];
 
     const query: FilterQuery<typeof Question> = {
       $and: [
