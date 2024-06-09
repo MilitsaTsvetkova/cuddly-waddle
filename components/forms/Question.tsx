@@ -147,7 +147,7 @@ export function Question({ mongoUserId, type, questionDetails }: Props) {
           name="explanation"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detailed Explanation of your problem
                 <span className="text-orange-500">*</span>
               </FormLabel>
@@ -191,7 +191,7 @@ export function Question({ mongoUserId, type, questionDetails }: Props) {
                   }}
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="body-regular mt-2.5 text-gray-500">
                 Introduce the problem and expand on what you put in the title.
                 Minimum 20 characters.
               </FormDescription>
